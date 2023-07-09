@@ -7,8 +7,8 @@ test('it translates "Hello" accordingly', () => {
   ).toBe('Hello')
 })
 
-test.skip('it translates "Hello World!" accordingly', () => {
+test('it translates "Hello World!" accordingly', () => {
   expect(
     translate('👉👆👆👆👆👆👆👆👆🤜👇👈👆👆👆👆👆👆👆👆👆👉🤛👈👊👉👉👆👉👇🤜👆🤛👆👆👉👆👆👉👆👆👆🤜👉🤜👇👉👆👆👆👈👈👆👆👆👉🤛👈👈🤛👉👇👇👇👇👇👊👉👇👉👆👆👆👊👊👆👆👆👊👉👇👊👈👈👆🤜👉🤜👆👉👆🤛👉👉🤛👈👇👇👇👇👇👇👇👇👇👇👇👇👇👇👊👉👉👊👆👆👆👊👇👇👇👇👇👇👊👇👇👇👇👇👇👇👇👊👉👆👊👉👆👊')
-  ).toBe('Hello')
+  ).toBe('Hello World!\n')
 })
