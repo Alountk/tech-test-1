@@ -8,6 +8,24 @@ const clamp = value => {
   return value
 }
 
+const getNextFistIndex = (index, instructions) => {
+  let fists = 1
+  for (let i = index + 1; i < instructions.length; i++) {
+    if (instructions[i] === '🤜') fists++
+    if (instructions[i] === '🤛') fists--
+    if (fists === 0) return i
+  }
+}
+
+const getPrevFistIndex = (index, instructions) => {
+  let fists = 1
+  for (let i = index - 1; i >= 0; i--) {
+    if (instructions[i] === '🤛') fists++
+    if (instructions[i] === '🤜') fists--
+    if (fists === 0) return i
+  }
+}
+
 function translate (string) {
   const memory = [0]
 
@@ -34,12 +52,12 @@ function translate (string) {
     },
     '🤜': () => {
       if (memory[pointer] === 0) {
-        index = arrayOfInstructions.indexOf('🤛', index)
+        index = getNextFistIndex(index, arrayOfInstructions)
       }
     },
     '🤛': () => {
       if (memory[pointer] !== 0) {
-        index = arrayOfInstructions.lastIndexOf('🤜', index)
+        index = getPrevFistIndex(index, arrayOfInstructions)
       }
     },
     '👊': () => {
@@ -50,13 +68,13 @@ function translate (string) {
   while (index < arrayOfInstructions.length) {
     const action = arrayOfInstructions[index]
     actions[action]()
-    console.log({ action, index, pointer })
+    console.log({ action, index, pointer, output })
     index++
   }
 
   return output
 }
 
-console.log(translate('👇🤜👇👇👇👇👇👇👇👉👆👈🤛👉👇👊👇🤜👇👉👆👆👆👆👆👈🤛👉👆👆👊👆👆👆👆👆👆👆👊👊👆👆👆👊'))
-
+// console.log(translate('👇🤜👇👇👇👇👇👇👇👉👆👈🤛👉👇👊👇🤜👇👉👆👆👆👆👆👈🤛👉👆👆👊👆👆👆👆👆👆👆👊👊👆👆👆👊'))
+console.log(translate('👉👆👆👆👆👆👆👆👆🤜👇👈👆👆👆👆👆👆👆👆👆👉🤛👈👊👉👉👆👉👇🤜👆🤛👆👆👉👆👆👉👆👆👆🤜👉🤜👇👉👆👆👆👈👈👆👆👆👉🤛👈👈🤛👉👇👇👇👇👇👊👉👇👉👆👆👆👊👊👆👆👆👊👉👇👊👈👈👆🤜👉🤜👆👉👆🤛👉👉🤛👈👇👇👇👇👇👇👇👇👇👇👇👇👇👇👊👉👉👊👆👆👆👊👇👇👇👇👇👇👊👇👇👇👇👇👇👇👇👊👉👆👊👉👆👊'))
 module.exports = translate
